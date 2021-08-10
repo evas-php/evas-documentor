@@ -7,7 +7,7 @@
  * @since 2020-06-19
  */
 use Evas\Documentor\Documentor;
-use Evas\Loader\Loader;
+use Evas\Base\Loader;
 
 set_exception_handler(function (\Throwable $e) {
     $error = get_class($e) . ': ' . $e->getMessage()
