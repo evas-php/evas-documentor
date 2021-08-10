@@ -1,0 +1,16 @@
+{
+    "name": "evas-php/evas-documentor",
+    "description": "PHP documentation generator",
+    "keywords": ["php", "documentation", "documentor", "generator", "evas-php"],
+    "version": "1.0",
+    "type": "library",
+    "license": "CC-BY-4.0",
+    "authors": [
+        {
+            "name": "Egor Vasyakin",
+            "email": "egor@evas-php.com"
+        }
+    ],
+    "require": {
+    }
+}
