@@ -1,6 +1,6 @@
 <?php
 /**
- * @package evas-php\evas-doc-generator
+ * @package evas-php\evas-documentor
  *
  * Эндпоинт генерации документации.
  * @author Egor Vasyakin <egor@evas-php.com>
