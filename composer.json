@@ -12,5 +12,6 @@
         }
     ],
     "require": {
+        "evas-php/evas-base": "*"
     }
 }
