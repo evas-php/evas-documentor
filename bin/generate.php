@@ -3,6 +3,9 @@
  * Эндпоинт генерации документации.
  * @package evas-php\evas-documentor
  * @author Egor Vasyakin <egor@evas-php.com>
+ * 
+ * @property string директория сканирования
+ * @property string директория вывода
  */
 use Evas\Base\Loader;
 use Evas\Documentor\Documentor;
