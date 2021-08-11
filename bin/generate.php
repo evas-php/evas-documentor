@@ -1,13 +1,11 @@
 <?php
 /**
- * @package evas-php\evas-documentor
- *
  * Эндпоинт генерации документации.
+ * @package evas-php\evas-documentor
  * @author Egor Vasyakin <egor@evas-php.com>
- * @since 2020-06-19
  */
-use Evas\Documentor\Documentor;
 use Evas\Base\Loader;
+use Evas\Documentor\Documentor;
 
 set_exception_handler(function (\Throwable $e) {
     $error = get_class($e) . ': ' . $e->getMessage()
@@ -23,7 +21,7 @@ define('SRC_DIR', realpath(dirname(BIN_DIR) . '/src/'));
 define('RUN_DIR', getcwd());
 
 // подключаем автозагрузчик
-require_once BIN_DIR . '/../../evas-loader/src/Loader.php';
+require_once BIN_DIR . '/../../evas-base/src/Loader.php';
 $loader = (new Loader)->useEvas()->run();
 
 
