@@ -76,7 +76,7 @@ class TokenParserStore
      * @param object сущность
      * @return self
      */
-    public function setNamespace(object &$object): ProcessStore
+    public function setNamespace(object &$object): TokenParserStore
     {
         if (!empty($this->namespace)) {
             // call_user_func([$this->namespace, $namespaceEntityMethod], $object);
@@ -90,7 +90,7 @@ class TokenParserStore
      * @param object сущность
      * @return self
      */
-    public function setDocComment(object &$object): ProcessStore
+    public function setDocComment(object &$object): TokenParserStore
     {
         if (!empty($this->docComment)) {
             if (method_exists($object, 'docComment')) {
@@ -106,7 +106,7 @@ class TokenParserStore
      * @param object сущность
      * @return self
      */
-    public function setPrefix(object &$object): ProcessStore
+    public function setPrefix(object &$object): TokenParserStore
     {
         if (!empty($this->prefix)) {
             if ($object instanceof _Method || $object instanceof AbstractClassEntity) {
@@ -123,7 +123,7 @@ class TokenParserStore
      * @param object сущность
      * @return self
      */
-    public function setVisabilityAndStaticly(object &$object): ProcessStore
+    public function setVisabilityAndStaticly(object &$object): TokenParserStore
     {
         if ($object instanceof _Method || $object instanceof _Property) {
             $object->visibility = in_array($this->visibility, self::VISABILITY_LIST) 
