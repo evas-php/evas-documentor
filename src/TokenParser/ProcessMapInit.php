@@ -82,8 +82,8 @@ class ProcessMapInit
                 ->endSymbol('{')
                 ->endCallback(function () use (&$file, &$store) {
                     $this->store->classEntity = $this->makeEntity(EntityNames::get($this->tokenValue));
-                    $this->store->setPrefix($this->store->classEntity);
-                        ->setNamespace($this->store->classEntity, $this->tokenValue);
+                    $this->store->setPrefix($this->store->classEntity)
+                        ->setNamespace($this->store->classEntity, $this->tokenValue)
                         ->setDocComment($this->store->classEntity);
                     call_user_func([$file, $this->tokenValue], $this->store->classEntity);
                 }),
@@ -128,7 +128,7 @@ class ProcessMapInit
                 ->enumSymbol(',')
                 ->endCallback(function (string $symbol = null) {
                     if (!empty($this->getValue())) {
-                        $this->store->method->arg($this->makeEntity(EntityNames::_FUNCTION_ARG));
+                        // $this->store->method->arg($this->makeEntity(EntityNames::_FUNCTION_ARG));
                     }
                     if ($this->isEndSymbol($symbol)) {
                         $this->runNextProcess('functionReturnType', ')');
@@ -141,7 +141,7 @@ class ProcessMapInit
                     if (':' !== substr($value, 0, 1)) return;
                     $this->value = substr($this->getValue(), 1);
                     $returnType = $this->makeEntity(EntityNames::_FUNCTION_RETURN_TYPE);
-                    $this->store->method->returnType($returnType);
+                    // $this->store->method->returnType($returnType);
                     if ($this->isEndSymbol('{')) {
                         $this->store->braceCountIncrement('method');
                     }
@@ -188,10 +188,10 @@ class ProcessMapInit
             (new Process('docComment'))
                 ->tokenName('T_DOC_COMMENT')
                 ->endCallback(function () {
-                    $this->store->docComment = $this->getValue();
-                    if (empty($this->store->namespace) && empty($this->store->inEntity)) {
-                        $this->store->setDocComment($this->store->file);
-                    }
+                    // $this->store->docComment = $this->getValue();
+                    // if (empty($this->store->namespace) && empty($this->store->inEntity)) {
+                    //     // $this->store->setDocComment($this->store->docComment);
+                    // }
                 }),
             (new Process('comment'))
                 ->tokenName('T_COMMENT')
