@@ -8,6 +8,7 @@ use Evas\Documentor\Entities\_File;
 use Evas\Documentor\TokenParser\ProcessMap;
 use Evas\Documentor\TokenParser\Traits\ProcessCheckTrait;
 use Evas\Documentor\TokenParser\Traits\ProcessPropertiesTrait;
+use Evas\Documentor\TokenParser\TokenParserStore;
 
 /**
  * Процесс парсинга PHP токенов файла.
@@ -22,6 +23,8 @@ class Process
      */
     use ProcessPropertiesTrait, ProcessCheckTrait;
 
+    public $store;
+
 
     /**
      * Конструктор процесса.
@@ -30,6 +33,7 @@ class Process
     public function __construct(string $name)
     {
         $this->name = $name;
+        $this->store = new TokenParserStore;
     }
 
     /**
