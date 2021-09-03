@@ -9,6 +9,7 @@ use Evas\Documentor\Entities\_File;
 use Evas\Documentor\TokenParser\TokenParserStore;
 use Evas\Documentor\TokenParser\Process;
 use Evas\Documentor\TokenParser\ProcessMap;
+use Evas\Documentor\TokenParser\ProcessMapInit;
 
 /**
  * Парсер PHP токенов файла.
@@ -27,8 +28,9 @@ class TokenParser
      */
     public function setProcessMap()
     {
-        ProcessMap::set([
-        ]);
+        ProcessMapInit::run();
+        // ProcessMap::set([
+        // ]);
     }
 
     /**
