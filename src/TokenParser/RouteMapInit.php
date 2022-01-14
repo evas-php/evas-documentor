@@ -42,10 +42,8 @@ class RouteMapInit
                     if (empty(static::$store->classEntity)) {
                         $this->file->useAlias($temp);
                     } else {
-                        $temp = $this->makeEntity(EntityNames::_INNER_TRAIT);
-                        var_dump($temp);
-                        $innerTrait = $temp;
-                        static::$store->setDocComment($innerTrait);
+                        $innerTrait = $this->makeEntity(EntityNames::_INNER_TRAIT);
+                        // static::$store->setDocComment($innerTrait);
                         static::$store->classEntity->trait($innerTrait);
                     }
                 }),
@@ -168,8 +166,8 @@ class RouteMapInit
                 ->endCallback(function () {
                     $this->value = "$this->tokenValue $this->value";
                     $property = $this->makeEntity(EntityNames::_PROPERTY);
-                    static::$store->setVisabilityAndStaticly($property)
-                        ->setDocComment($property);
+                    static::$store->setVisabilityAndStaticly($property);
+                        // ->setDocComment($property);
                     static::$store->classEntity->property($property);
                 }),
 
