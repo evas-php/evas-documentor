@@ -91,7 +91,7 @@ class RouteStore
      */
     public function setDocComment(string &$object): RouteStore
     {
-        if (!empty($this->docComment)) {
+        if (!empty($this->docComment) ) {
             if (method_exists($object, 'docComment')) {
                 $object->docComment($this->docComment);
             }

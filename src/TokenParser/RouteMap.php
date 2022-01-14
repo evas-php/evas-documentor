@@ -19,6 +19,11 @@ class RouteMap
     public static $map = [];
 
     /**
+     * @static static законченные процессы
+     */
+    public static $ended = [];
+
+    /**
      * @static static текущие процессы
      */
     public static $current = [];
@@ -33,15 +38,15 @@ class RouteMap
      * Установка процесса/процессов в маппинг.
      * @param array|Route
      */
-    public static function set($process)
+    public static function set($route)
     {
-        assert(is_array($process) || is_a($process, Route::class));
-        if (is_array($process)) {
-            foreach ($process as &$subprocess) {
-                static::set($subprocess);
+        assert(is_array($route) || is_a($route, Route::class));
+        if (is_array($route)) {
+            foreach ($route as &$subroute) {
+                static::set($subroute);
             }
         } else {
-            static::$map[$process->name] = &$process;
+            static::$map[$route->name] = &$route;
         }
     }
 
@@ -59,13 +64,13 @@ class RouteMap
      * Установка текущего процесса.
      * @param Route
      */
-    public static function setCurrent(Route &$process)
+    public static function setCurrent(Route $route)
     {
-        if (!empty(static::$current)) {
-            static::$current->stop();
-            static::$latest = static::$current;
-        }
-        static::$current = &$process;
+        // if (!empty(static::$current)) {
+        //     static::$current->stop();
+        //     static::$latest = static::$current;
+        // }
+        static::$current[] = &$route;
     }
 
     /**
@@ -81,20 +86,22 @@ class RouteMap
      * Получение текущего процесса.
      * @return Route|null
      */
-    public static function getCurrent(): ?Route
+    public static function getCurrent(): array
     {
         return static::$current;
     }
 
     /**
-     * Получение текущего процесса, если он запущен.
-     * @return Route|null
+     * Завершение процесса.
      */
-    public static function getRun(): ?Route
+    public static function shut(Route $route)
     {
-        $process = &static::$current;
-        return empty($process) || false === $process->isRun() ? null : $process;
+        $pos = array_search($route, static::$current);
+        array_splice(static::$current, $pos, 1);
+        static::$ended[] = $route;
     }
+
+
 
     /**
      * Поиск процесса по имени токена.
@@ -103,9 +110,9 @@ class RouteMap
      */
     public static function find(string $tokenName): ?Route
     {
-        foreach (static::$map as &$process) {
-            if (true === $process->isTokenName($tokenName)) {
-                return $process;
+        foreach (static::$map as &$route) {
+            if (true === $route->isTokenName($tokenName)) {
+                return $route;
             }
         }
         return null;

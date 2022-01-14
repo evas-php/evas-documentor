@@ -45,7 +45,7 @@ class _Class extends AbstractClassEntity
             $implements = str_replace(' ', '', $implements);
             $implements = explode(',', $implements);
             foreach ($implements as $implement) {
-                $this->implement($implement);
+                $this->implements($implement);
             }
         }
         @[$name, $extends] = explode(' extends ', $name);

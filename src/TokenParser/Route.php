@@ -23,56 +23,61 @@ class Route
      */
     use RoutePropertiesTrait, RouteCheckTrait;
 
-    public RouteStore $store;
+    public static RouteStore $store;
 
 
     /**
      * Конструктор процесса.
      * @param string имя
      */
-    public function __construct(string $name, RouteStore $store)
+    public function __construct(string $name)
     {
         $this->name = $name;
-        $this->store = new RouteStore;
+        if (!isset(static::$store)) {
+            static::$store = new RouteStore;
+        }
     }
 
     /**
      * Завершение процесса, если соответсует символ.
      * @param string символ
-     * @return self
+     * @return bool
      */
-    public function endIfSymbol(string $symbol): Route
+    public function endIfSymbol(string $symbol): bool
     {
         if ($this->isEndSymbol($symbol)) {
-            return $this->end($symbol);
+            $this->end($symbol);
+            return true;
         }
-        return $this;
+        return false;
     }
 
     /**
      * Перечисление значения, если соответсует символ.
      * @param string символ
-     * @return self
+     * @return bool
      */
-    public function enumIfSymbol(string $symbol): Route
+    public function enumIfSymbol(string $symbol): bool
     {
         if ($this->isEnumSymbol($symbol)) {
-            return $this->enum($symbol);
+            $this->enum($symbol);
+            return true;
         }
-        return $this;
+        return false;
     }
 
     /**
      * Остановка процесса, если соответсует символ.
      * @param string символ
-     * @return self
+     * @return bool
      */
-    public function stopIfSymbol(string $symbol): Route
+    public function stopIfSymbol(string $symbol): bool
     {
         if ($this->isStopSymbol($symbol)) {
-            return $this->stop($symbol);
+            $this->stop($symbol);
+            return true;
         }
-        return $this;
+        return false;
     }
 
     /**
@@ -87,15 +92,10 @@ class Route
         $this->file = &$file;
         $this->tokenValue = $tokenValue;
         $this->startLine = $tokenLine;
-        echo 1;
-        var_dump($this->isCondition());
         if (false === $this->isCondition()) return null;
         $this->isRun = true;
         RouteMap::setCurrent($this);
         // если нет завершающего символа
-        echo 2;
-        var_dump(empty($this->endSymbol));
-        // var_dump($this);
         if (empty($this->endSymbol)) {
             // помещаем значение токена в значение и завершаем процесс
             $this->mergeValue($tokenValue);
@@ -150,6 +150,7 @@ class Route
     {
         echo "Stop Route: \e[35m$this->name\e[0m \e[36m$value\e[0m\n";
         $this->isRun = false;
+        RouteMap::shut($this);
         return $this;
     }
 
@@ -189,7 +190,27 @@ class Route
      */
     public function runNextRoute(string $name, string $symbol): Route
     {
-        $Route = RouteMap::get($name);
-        return $Route->run($this->file, $symbol, $this->startLine);
+        $route = RouteMap::get($name);
+        return $route->run($this->file, $symbol, $this->startLine);
     }
+
+    /**
+     * Проверки токена.
+     * @param string|array токен
+     * @return object
+     */
+    public function check($token): int
+    {
+        if (is_string($token)) {
+            $tokenValue = $token;
+        } else {
+            $tokenValue = $token[1];
+        }
+        $out = false;
+        $out |= $this->endIfSymbol($tokenValue);
+        $out |= $this->enumIfSymbol($tokenValue);
+        $out |= $this->stopIfSymbol($tokenValue);
+        return $out;
+    }
+    
 }

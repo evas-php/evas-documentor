@@ -7,9 +7,9 @@ namespace Evas\Documentor\TokenParser;
 use Evas\Documentor\Documentor;
 use Evas\Documentor\Entities\_File;
 use Evas\Documentor\TokenParser\TokenParserStore;
-use Evas\Documentor\TokenParser\Process;
-use Evas\Documentor\TokenParser\ProcessMap;
-use Evas\Documentor\TokenParser\ProcessMapInit;
+use Evas\Documentor\TokenParser\Route;
+use Evas\Documentor\TokenParser\RouteMap;
+use Evas\Documentor\TokenParser\RouteMapInit;
 
 /**
  * Парсер PHP токенов файла.
@@ -26,10 +26,10 @@ class TokenParser
     /**
      * Установка процессов парсинга.
      */
-    public function setProcessMap()
+    public function setRouteMap()
     {
-        ProcessMapInit::run();
         // ProcessMap::set([
+        RouteMapInit::run();
         // ]);
     }
 
@@ -40,7 +40,7 @@ class TokenParser
     public function __construct(Documentor $documentor)
     {
         $this->documentor = &$documentor;
-        $this->setProcessMap();
+        $this->setRouteMap();
     }
 
     /**
@@ -49,44 +49,46 @@ class TokenParser
      */
     public function run(_File $file)
     {
-        $store = new TokenParserStore($file);
-        $store->file = &$file;
         $tokens = $file->getTextTokens();
+
         foreach ($tokens as &$token) {
-            $process = ProcessMap::getRun();
-            if (is_array($token)) {
+            usleep(150000);
+            echo json_encode( $token);
+            echo '   '.count(RouteMap::$current).'  '.count(RouteMap::$ended);
+            echo "\n";
+            if (is_string($token)) {
+                $tokenValue = $token;
+            } else
                 $tokenValue = $token[1];
-                $tokenLine = $token[2];
-                if (empty($process)) {
-                    $tokenName = token_name($token[0]);
-                    $process = ProcessMap::find($tokenName);
-                    if (!empty($process)) {
-                        $process->run($file, $tokenValue, $tokenLine);
+            $routes = RouteMap::getCurrent();
+            $processed = false;
+            if (count($routes)>0) {
+                foreach ($routes as &$route) {
+                    $processed = $route->check($token);
+                    if ('{' === $token) {
+                        $route::$store->incrementBraceCount();
+                        continue;
                     }
-                    continue;
+                    if ('}' === $token) {
+                        $route::$store->decrementBraceCount();
+                        continue;
+                    }
+                    if (!$processed) {
+                        $route->mergeValue($tokenValue);
+                        continue;
+                    } else break;
+
                 }
             }
-            if (!empty($process)) {
-                if (is_string($token)) {
-                    $tokenValue = $token;
-                }
-                $process->endIfSymbol($tokenValue);
-                $process->enumIfSymbol($tokenValue);
-                $process->stopIfSymbol($tokenValue);
-
-                if ('{' === $token) {
-                    $store->incrementBraceCount();
-                    continue;
-                }
-                else if ('}' === $token) {
-                    $store->decrementBraceCount();
-                    continue;
-                }
-
-                if ($process->isRun()) {
-                    $process->mergeValue($tokenValue);
+            if (is_array($token) && $processed == false && ('{' !== $token || '}' !== $token)) {
+                $tokenName = token_name($token[0]);
+                $tokenLine = $token[2];
+                $route = RouteMap::find($tokenName);
+                if (isset($route)) {
+                    $route->run($file, $tokenValue, $tokenLine);
                 }
             }
+
         }
     }
 }
