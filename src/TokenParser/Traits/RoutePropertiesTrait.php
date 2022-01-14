@@ -5,14 +5,14 @@
 namespace Evas\Documentor\TokenParser\Traits;
 
 use Evas\Documentor\Entities\_File;
-use Evas\Documentor\TokenParser\Process;
+use Evas\Documentor\TokenParser\Route;
 
 /**
  * Трейт свойств процесса парсинга PHP токенов.
  * @author Egor Vasyakin <egor@evas-php.com>
  * @since 21 Jun 2020
  */
-trait ProcessPropertiesTrait
+trait RoutePropertiesTrait
 {
     /** @var string имя процесса */
     public $name;
@@ -49,7 +49,7 @@ trait ProcessPropertiesTrait
      * @param ... токены
      * @return self
      */
-    public function tokenName(...$args): Process
+    public function tokenName(...$args): Route
     {
         $this->tokenName = $args;
         return $this;
@@ -60,7 +60,7 @@ trait ProcessPropertiesTrait
      * @param string символ
      * @return self
      */
-    public function endSymbol(...$args): Process
+    public function endSymbol(...$args): Route
     {
         $this->endSymbol = $args;
         return $this;
@@ -71,7 +71,7 @@ trait ProcessPropertiesTrait
      * @param string символ
      * @return self
      */
-    public function enumSymbol(string $symbol): Process
+    public function enumSymbol(string $symbol): Route
     {
         $this->enumSymbol = $symbol;
         return $this;
@@ -82,7 +82,7 @@ trait ProcessPropertiesTrait
      * @param string символ
      * @return self
      */
-    public function stopSymbol(string $symbol): Process
+    public function stopSymbol(string $symbol): Route
     {
         $this->stopSymbol = $symbol;
         return $this;
@@ -93,7 +93,7 @@ trait ProcessPropertiesTrait
      * @param callable обработчик условия запуска
      * @return self
      */
-    public function runCondition(callable $callback): Process
+    public function runCondition(callable $callback): Route
     {
         $this->runCondition = $callback->bindTo($this);
         return $this;
@@ -104,7 +104,7 @@ trait ProcessPropertiesTrait
      * @param callable обработчик условия запуска
      * @return self
      */
-    public function endCallback(callable $callback): Process
+    public function endCallback(callable $callback): Route
     {
         $this->endCallback = $callback->bindTo($this);
         return $this;
@@ -116,7 +116,7 @@ trait ProcessPropertiesTrait
      * @param string
      * @return self
      */
-    public function mergeValue(string $value): Process
+    public function mergeValue(string $value): Route
     {
         $this->value .= $value;
         return $this;

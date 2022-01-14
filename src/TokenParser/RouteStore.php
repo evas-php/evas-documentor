@@ -3,13 +3,12 @@
  * @package evas-php\evas-documentor
  */
 namespace Evas\Documentor\TokenParser;
-
 /**
  * Хранилище парсинга PHP токенов файла.
  * @author Egor Vasyakin <egor@evas-php.com>
  * @since 2 Jul 2020
  */
-class TokenParserStore
+class RouteStore
 {
     /**
      * @static array список допустимых префиксов сущности
@@ -54,7 +53,7 @@ class TokenParserStore
     /**
      * @var string видимость (public|protected|private)
      */
-    public $visability;
+    public $visibility;
 
     /**
      * @var bool статичность
@@ -76,7 +75,7 @@ class TokenParserStore
      * @param object сущность
      * @return self
      */
-    public function setNamespace(object &$object): TokenParserStore
+    public function setNamespace(object &$object): RouteStore
     {
         if (!empty($this->namespace)) {
             // call_user_func([$this->namespace, $namespaceEntityMethod], $object);
@@ -87,10 +86,10 @@ class TokenParserStore
     }
 
     /**
-     * @param object сущность
+     * @param string сущность
      * @return self
      */
-    public function setDocComment(object &$object): TokenParserStore
+    public function setDocComment(string &$object): RouteStore
     {
         if (!empty($this->docComment)) {
             if (method_exists($object, 'docComment')) {
@@ -106,7 +105,7 @@ class TokenParserStore
      * @param object сущность
      * @return self
      */
-    public function setPrefix(object &$object): TokenParserStore
+    public function setPrefix(object &$object): RouteStore
     {
         if (!empty($this->prefix)) {
             if ($object instanceof _Method || $object instanceof AbstractClassEntity) {
@@ -123,7 +122,7 @@ class TokenParserStore
      * @param object сущность
      * @return self
      */
-    public function setVisabilityAndStaticly(object &$object): TokenParserStore
+    public function setVisabilityAndStaticly(object &$object): RouteStore
     {
         if ($object instanceof _Method || $object instanceof _Property) {
             $object->visibility = in_array($this->visibility, self::VISABILITY_LIST) 

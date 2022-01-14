@@ -11,7 +11,7 @@ use Evas\Documentor\Entities\_File;
  * @author Egor Vasyakin <egor@evas-php.com>
  * @since 21 Jun 2020
  */
-trait ProcessCheckTrait
+trait RouteCheckTrait
 {
     /**
      * Проверка на соответствие символа значению свойства класса.
