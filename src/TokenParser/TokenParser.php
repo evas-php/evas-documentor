@@ -6,7 +6,7 @@ namespace Evas\Documentor\TokenParser;
 
 use Evas\Documentor\Documentor;
 use Evas\Documentor\Entities\_File;
-use Evas\Documentor\TokenParser\TokenParserStore;
+use Evas\Documentor\TokenParser\RouteStore;
 use Evas\Documentor\TokenParser\Route;
 use Evas\Documentor\TokenParser\RouteMap;
 use Evas\Documentor\TokenParser\RouteMapInit;
@@ -65,23 +65,26 @@ class TokenParser
             if (count($routes)>0) {
                 foreach ($routes as &$route) {
                     $processed = $route->check($token);
-                    if ('{' === $token) {
-                        $route::$store->incrementBraceCount();
-                        continue;
-                    }
-                    if ('}' === $token) {
-                        $route::$store->decrementBraceCount();
-                        continue;
-                    }
                     if (!$processed) {
                         $route->mergeValue($tokenValue);
                         continue;
                     } else break;
-
                 }
+            }
+            if ('{' === $token ) {
+                Route::$store->incrementBraceCount();
+                continue;
+            }
+            if ('}' === $token) {
+                Route::$store->decrementBraceCount();
+                continue;
             }
             if (is_array($token) && $processed == false && ('{' !== $token || '}' !== $token)) {
                 $tokenName = token_name($token[0]);
+                if ($tokenName === 'T_CURLY_OPEN') {
+                    Route::$store->incrementBraceCount();
+                    continue;
+                }
                 $tokenLine = $token[2];
                 $route = RouteMap::find($tokenName);
                 if (isset($route)) {

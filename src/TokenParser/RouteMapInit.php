@@ -84,6 +84,7 @@ class RouteMapInit
                         $classEntity->namespace(static::$store->namespace);
                     }
                     static::$store->classEntity = $classEntity;
+                    static::$store->class = &$classEntity;
                 }),
 
             (new Route('visibility'))
