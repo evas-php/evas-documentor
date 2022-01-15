@@ -74,23 +74,17 @@ class RouteMapInit
                 })
                 ->endSymbol('{')
                 ->endCallback(function () {
-                    static::$store->classEntity = $this->makeEntity(EntityNames::get($this->tokenValue));
-                    static::$store->classEntity->file($this->file);
-                    if (isset(static::$store->prefix)) {
-                        static::$store->classEntity->prefix(static::$store->prefix);
-                    }
-                    if (isset(static::$store->namespace)) {
-                        static::$store->classEntity->namespace(static::$store->namespace);
-                    }
-                    if (isset(static::$store->useAliases)) {
-                        static::$store->classEntity->useAlias(static::$store->useAliases);
-                    }
-                    if (isset(static::$store->docComment)) {
-                        static::$store->classEntity->docComment(static::$store->docComment);
-                    }
-                    // call_user_func([$file, $this->tokenValue], static::$store->classEntity);
-                }),
+                    $classEntity = $this->makeEntity(EntityNames::get($this->tokenValue));
+                    $classEntity->file($this->file);
+                    static::$store->setPrefix($classEntity)
+                        ->setUseAliases($classEntity)
+                        ->setDocComment($classEntity);
 
+                    if (isset(static::$store->namespace)) {
+                        $classEntity->namespace(static::$store->namespace);
+                    }
+                    static::$store->classEntity = $classEntity;
+                }),
 
             (new Route('visibility'))
                 ->tokenName('T_PUBLIC', 'T_PROTECTED', 'T_PRIVATE')
