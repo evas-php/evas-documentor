@@ -34,13 +34,15 @@ class RouteMapInit
             (new Route('use'))
                 ->tokenName('T_USE')
                 ->enumSymbol(',')
-                //->stopSymbol('(') // игнорируем use анонимных функций
+                ->stopSymbol('(') // игнорируем use анонимных функций
                 ->endSymbol(';')
                 ->endCallback(function () {
-                        $temp = $this->makeEntity(EntityNames::_USE_ALIAS);
-                        var_dump($temp);
                     if (empty(static::$store->classEntity)) {
-                        $this->file->useAlias($temp);
+                        $temp = $this->makeEntity(EntityNames::_USE_ALIAS);
+                        if (empty(static::$store->useAliases)) {
+                            static::$store->useAliases = [];
+                        }
+                        static::$store->useAliases[] = $temp;
                     } else {
                         $innerTrait = $this->makeEntity(EntityNames::_INNER_TRAIT);
                         // static::$store->setDocComment($innerTrait);
@@ -79,6 +81,9 @@ class RouteMapInit
                     }
                     if (isset(static::$store->namespace)) {
                         static::$store->classEntity->namespace(static::$store->namespace);
+                    }
+                    if (isset(static::$store->useAliases)) {
+                        static::$store->classEntity->useAlias(static::$store->useAliases);
                     }
                     if (isset(static::$store->docComment)) {
                         static::$store->classEntity->docComment(static::$store->docComment);

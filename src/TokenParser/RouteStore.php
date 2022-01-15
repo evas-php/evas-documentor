@@ -31,6 +31,11 @@ class RouteStore
     public $namespace;
 
     /**
+     * @var string алиасы пространства имен
+     */
+    public $useAliases;
+
+    /**
      * @var bool было ли двоеточие перед ключевым словом class
      */
     public $doubleColon;
@@ -96,6 +101,19 @@ class RouteStore
                 $object->docComment($this->docComment);
             }
             $this->docComment = null;
+        }
+        return $this;
+    }
+
+    /**
+     * Установка алиасов пространства имен сущности.
+     * @param string сущность
+     * @return self
+     */
+    public function setUseAliases(string &$object): RouteStore
+    {
+        if (!empty($this->useAliases) ) {
+            $object->useAliases = $this->useAliases;
         }
         return $this;
     }

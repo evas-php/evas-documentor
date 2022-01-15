@@ -8,6 +8,7 @@ use Evas\Documentor\Entities\Base\AbstractClassEntity;
 use Evas\Documentor\Entities\Traits\InnerTraitsAndPropertiesTrait;
 use Evas\Documentor\Entities\Traits\PrefixTrait;
 use Evas\Documentor\Entities\_ClassConstant;
+use Evas\Documentor\Entities\_UseAlias;
 
 /**
  * Сущность класса.
@@ -28,6 +29,11 @@ class _Class extends AbstractClassEntity
      * @var array of _Interface интерфейсы класса
      */
     public $implements = [];
+
+    /**
+     * @var array of _UseAlias сущности алиасов пространства имен
+     */
+    public $useAliases = [];
 
     /**
      * @var array of _ClassConstant константы класса
@@ -81,5 +87,14 @@ class _Class extends AbstractClassEntity
     public function constant(_ClassConstant $constant)
     {
         $this->constants[$constant->name] = &$constant;
+    }
+
+    /**
+     * Установка алиасов имен класса.
+     * @param array of _UseAlias
+     */
+    public function useAlias(array $alias)
+    {
+        $this->useAliases = &$alias;
     }
 }
