@@ -73,6 +73,7 @@ class RouteMapInit
                 ->endSymbol('{')
                 ->endCallback(function () {
                     static::$store->classEntity = $this->makeEntity(EntityNames::get($this->tokenValue));
+                    static::$store->classEntity->file($this->file);
                     if (isset(static::$store->prefix)) {
                         static::$store->classEntity->prefix(static::$store->prefix);
                     }

@@ -23,4 +23,13 @@ abstract class AbstractFileEntity extends AbstractEntity
      * @var int номер строки
      */
     public $line;
+
+    /**
+     * Установка файла.
+     * @param _File файл
+     */
+    public function file(_File $file)
+    {
+        $this->file = &$file;
+    }
 }
