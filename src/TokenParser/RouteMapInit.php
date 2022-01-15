@@ -102,19 +102,19 @@ class RouteMapInit
             (new Route('functionName'))
                 ->tokenName('T_FUNCTION')
                 ->endSymbol('(')
-                // ->endSymbol('{', ';')
                 ->endCallback(function () {
                     if (empty($this->getValue())) return;
                     $className = empty(static::$store->classEntity) 
                         ? EntityNames::_FILE_FUNCTION : EntityNames::_METHOD;
                     $method = $this->makeEntity($className);
-                    // static::$store->setDocComment($method);
+
                     if (empty(static::$store->classEntity)) {
                         $this->file->addFunction($method);
                         static::$store->setNamespace($method, 'addFunction');
                     } else {
                         static::$store->setVisabilityAndStaticly($method)
-                            ->setPrefix($method);
+                            ->setPrefix($method)
+                            ->setDocComment($method);
                         static::$store->classEntity->method($method);
                     }
                     static::$store->method = &$method;
@@ -133,11 +133,12 @@ class RouteMapInit
             //         static::$store->file->include($include);
             //     }),
             (new Route('functionArgs'))
-                ->endSymbol(')')
                 ->enumSymbol(',')
+                ->endSymbol(')')
                 ->endCallback(function (string $symbol = null) {
                     if (!empty($this->getValue())) {
-                        // static::$store->method->arg($this->makeEntity(EntityNames::_FUNCTION_ARG));
+                        $arg = $this->makeEntity(EntityNames::_FUNCTION_ARG);
+                        static::$store->method->arg($arg);
                     }
                     if ($this->isEndSymbol($symbol)) {
                         $this->runNextRoute('functionReturnType', ')');
@@ -150,9 +151,9 @@ class RouteMapInit
                     if (':' !== substr($value, 0, 1)) return;
                     $this->value = substr($this->getValue(), 1);
                     $returnType = $this->makeEntity(EntityNames::_FUNCTION_RETURN_TYPE);
-                    // static::$store->method->returnType($returnType);
+                    static::$store->method->returnType($returnType);
                     if ($this->isEndSymbol('{')) {
-                        static::$store->incrementBraceCount('method');
+                        static::$store->incrementMethodBraceCount();
                     }
                 }),
 
@@ -160,7 +161,7 @@ class RouteMapInit
                 ->tokenName('T_VARIABLE')
                 ->endSymbol(';')
                 ->runCondition(function () {
-                    return !empty(static::$store->classEntity) && empty(static::$store->inMethod)
+                    return !empty(static::$store->classEntity) && empty(static::$store->method)
                         ? true : false;
                 })
                 ->endCallback(function () {
