@@ -91,10 +91,11 @@ class RouteStore
     }
 
     /**
-     * @param string сущность
+     * Установка доккоммента сущности.
+     * @param object сущность
      * @return self
      */
-    public function setDocComment(string &$object): RouteStore
+    public function setDocComment(object &$object): RouteStore
     {
         if (!empty($this->docComment) ) {
             if (method_exists($object, 'docComment')) {
@@ -107,13 +108,16 @@ class RouteStore
 
     /**
      * Установка алиасов пространства имен сущности.
-     * @param string сущность
+     * @param object сущность
      * @return self
      */
-    public function setUseAliases(string &$object): RouteStore
+    public function setUseAliases(object &$object): RouteStore
     {
         if (!empty($this->useAliases) ) {
-            $object->useAliases = $this->useAliases;
+            if (method_exists($object, 'useAlias')) {
+                $object->useAlias($this->useAliases);
+            }
+            $this->useAliases = null;
         }
         return $this;
     }
