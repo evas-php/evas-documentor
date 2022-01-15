@@ -121,10 +121,9 @@ class Route
     public function makeEntity(string $className): object
     {
         $entity = new $className($this->getValue());
-        // if (isset($entity->file)) {
-            // $entity->file = $this->file;
+        if (property_exists($entity,'line')) {
             $entity->line = $this->startLine;
-        // }
+        }
         return $entity;
     }
 
