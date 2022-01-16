@@ -86,7 +86,8 @@ class Route
      */
     public function run(_File &$file, string $tokenValue, int $tokenLine): ?Route
     {
-        echo "Run Route: \e[35m$this->name\e[0m \e[36m$tokenValue\e[0m\n";
+        if (VERBOSE) 
+            echo "Run Route: \e[35m$this->name\e[0m \e[36m$tokenValue\e[0m\n";
         $this->value = '';
         $this->entity = null;
         $this->file = &$file;
@@ -135,10 +136,12 @@ class Route
     {
         $endCallback = $this->endCallback;
         if (!empty($endCallback)) {
-            echo "\e[32mRun endCalback\e[0m\n";
+            if (VERBOSE) 
+                echo "\e[32mRun endCalback\e[0m\n";
             $endCallback($value);
         }
-        else echo "\e[31mendCalback is empty\e[0m\n";
+        else if (VERBOSE) echo "\e[31mendCalback is empty\e[0m\n";
+            
     }
 
     /**
@@ -147,7 +150,8 @@ class Route
      */
     public function stop(string $value = null): Route
     {
-        echo "Stop Route: \e[35m$this->name\e[0m \e[36m$value\e[0m\n";
+        if (VERBOSE) 
+            echo "Stop Route: \e[35m$this->name\e[0m \e[36m$value\e[0m\n";
         $this->isRun = false;
         RouteMap::shut($this);
         return $this;
@@ -159,7 +163,8 @@ class Route
      */
     public function enum(string $value): Route
     {
-        echo "Enum Route: \e[35m$this->name\e[0m \e[36m$value\e[0m\n";
+        if (VERBOSE) 
+            echo "Enum Route: \e[35m$this->name\e[0m \e[36m$value\e[0m\n";
         $this->runEndCallback($value);
         $this->value = '';
         $this->entity = null;
@@ -172,11 +177,12 @@ class Route
      */
     public function end(string $value = null): Route
     {
-        echo "End Route: \e[35m$this->name\e[0m \e[36m$value\e[0m\n";
+        // echo "End Route: \e[35m$this->name\e[0m \e[36m$value\e[0m\n";
         $this->runEndCallback($value);
         if ('functionArgs' === $this->name) {
             $endSymbols = implode('","', $this->endSymbol);
-            echo "\e[41m EndSymbol is = [\"$endSymbols\"] \e[0m\n";
+            if (VERBOSE) 
+                echo "\e[41m EndSymbol is = [\"$endSymbols\"] \e[0m\n";
         }
         return $this->stop();
     }

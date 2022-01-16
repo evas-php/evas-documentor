@@ -75,6 +75,15 @@ if (!in_array($start, ['y', 'yes', ''])) {
     echo "Excaped and Exit\n";
     return;
 }
+
+echo "\e[1mActivate debug mode?\e[0m\n";
+
+$start = readline('(Y/N): ');
+$start = strtolower(trim($start));
+if (!in_array($start, ['y', 'yes'])) {
+    define('VERBOSE', false);
+} else
+    define('VERBOSE', true);
 echo "\e[1mStart\e[0m\n";
 echo "----------\n";
 

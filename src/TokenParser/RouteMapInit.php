@@ -188,6 +188,7 @@ class RouteMapInit
                 ->tokenName('T_STRING')
                 ->endSymbol(';')
                 ->runCondition(function () {
+                    if (VERBOSE) 
                     echo "$this->name: $this->tokenValue, $this->value\n";
                     return 'define' === $this->tokenValue ? true : false;
                 })

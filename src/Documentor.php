@@ -151,6 +151,7 @@ class Documentor
         $this->line("\e[33m------------------------------\e[0m");
         $this->level--;
         
+        if (VERBOSE) readline('Press any key to continue: ');
 
         // $this->line("\e[33m------------------------------\e[0m");
         // while (strlen($file) > 0) {
