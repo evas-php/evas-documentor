@@ -243,6 +243,13 @@ class Documentor
     {
         $namespaces = [];
         foreach ($this->parsed as &$store) {
+            if (!isset($store->namespace)) {
+                if (!isset($namespaces['UNRECOGNIZED'])) {
+                    $namespaces['UNRECOGNIZED'] = [];
+                }
+                $namespaces['UNRECOGNIZED'][] = $store;
+                continue;
+            }
             if (!isset($namespaces[$store->namespace->name])) {
                 $namespaces[$store->namespace->name] = $store->namespace;
             }
@@ -267,7 +274,7 @@ class Documentor
         if (is_null($namespace)) {
             $namespace = &$this->parsed;
         }
-        file_put_contents($file, json_encode($namespace));
+        file_put_contents($file, json_encode($namespace,JSON_PRETTY_PRINT));
         $this->line("\e[1;32mСохранен файл \e[1;35m".$file."\e[0m");
     }
 
@@ -276,8 +283,8 @@ class Documentor
      */
     public function outDir(string $dir)
     {
-        foreach ($this->parsed as &$namespace) {
-            $this->outFile($dir.'\\'.str_replace('\\','',$namespace->name).'.json',$namespace);
+        foreach ($this->parsed as $name => $namespace) {
+            $this->outFile($dir.'\\'.str_replace('\\','',$name).'.json',$namespace);
         }
     }
 }
