@@ -49,6 +49,7 @@ class TokenParser
     public function run(_File $file):RouteStore
     {
         Route::regenerateStorage();
+        Route::$store->file = $file;
         $tokens = $file->getTextTokens();
 
         foreach ($tokens as &$token) {

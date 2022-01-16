@@ -51,6 +51,11 @@ class RouteStore
     public $method;
 
     /**
+     * @var _File
+     */
+    public $file;
+
+    /**
      * @var string префикс (null|abstract|final)
      */
     public $prefix;

@@ -190,11 +190,12 @@ class RouteMapInit
                 ->runCondition(function () {
                     if (VERBOSE) 
                     echo "$this->name: $this->tokenValue, $this->value\n";
+                        static::$store->doubleColon = false;
                     return 'define' === $this->tokenValue ? true : false;
                 })
                 ->endCallback(function () {
-                    $constant = $this->makeEntity(EntityNames::_DEFINE);
-                    static::$store->setNamespace($constant, 'constant');
+                    $constant = $this->makeEntity(EntityNames::_FILE_CONSTANT);
+                    $constant->namespace(static::$store->namespace);
                     static::$store->file->constant($constant);
                 }),
             (new Route('docComment'))

@@ -8,6 +8,7 @@ use Evas\Documentor\Entities\_Class;
 use Evas\Documentor\Entities\_ClassConstant;
 use Evas\Documentor\Entities\_Define;
 use Evas\Documentor\Entities\_File;
+use Evas\Documentor\Entities\_FileConstant;
 use Evas\Documentor\Entities\_FileFunction;
 use Evas\Documentor\Entities\_FunctionArg;
 use Evas\Documentor\Entities\_FunctionReturnType;
@@ -32,6 +33,7 @@ class EntityNames
     const _CLASS_CONSTANT = _ClassConstant::class;
     const _DEFINE = _Define::class;
     const _FILE = _File::class;
+    const _FILE_CONSTANT = _FileConstant::class;
     const _FILE_FUNCTION = _FileFunction::class;
     const _FUNCTION_ARG = _FunctionArg::class;
     const _FUNCTION_RETURN_TYPE = _FunctionReturnType::class;
