@@ -38,6 +38,10 @@ class Route
         }
     }
 
+
+    /**
+     * Очистка хранилища процесса.
+     */
     public static function regenerateStorage()
     {
         static::$store = new RouteStore;

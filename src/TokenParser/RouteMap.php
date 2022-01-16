@@ -102,6 +102,10 @@ class RouteMap
         static::$ended[] = $route;
     }
 
+    /**
+     * Очистка маппера и возврат результатов.
+     * @return RouteStore
+     */
     public static function shrinkageMap():RouteStore
     {
         $store = clone static::$ended[0]::$store;

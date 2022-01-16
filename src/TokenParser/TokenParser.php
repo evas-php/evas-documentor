@@ -28,9 +28,7 @@ class TokenParser
      */
     public function setRouteMap()
     {
-        // ProcessMap::set([
         RouteMapInit::run();
-        // ]);
     }
 
     /**
@@ -45,7 +43,8 @@ class TokenParser
 
     /**
      * Запуск парсинга.
-     * @param _File
+     * @param _File входной файл
+     * @return RouteStore результат разбора
      */
     public function run(_File $file):RouteStore
     {

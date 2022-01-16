@@ -141,53 +141,22 @@ class Documentor
         }
         $this->fileCount++;
         $this->line("Parsing: \e[1;32m$path\e[0m");
-        // var_dump($file->getTextTokens());
-        // $text = $file->getText();
-        // $lexer = new \Evas\Lexer\Lexer;
-        // $lexer->run($text);
-        // $this->line("\e[33m------------------------------\e[0m");
-        // $this->line(token_name(319));
-        // $this->line(token_name(321));
-        // $this->line(token_name(323));
-        // $this->line(token_name(328));
-        // $this->line(token_name(382));
-        // return;
         $this->level++;
-        // echo "----------\n$file\n----------\n";
         $this->parsed[] = $this->tokenParser->run($file);
         $try = 0;
-        $this->line("\e[33m------------------------------\e[0m");
-        $this->iterationView($file);
-        $this->line("\e[33m------------------------------\e[0m");
+        if (VERBOSE) {
+            $this->line("\e[33m------------------------------\e[0m");
+            $this->iterationView($this->parsed[count($this->parsed)-1]);
+            $this->line("\e[33m------------------------------\e[0m");
+        }
         $this->level--;
-        
         if (VERBOSE) readline('Press any key to continue: ');
-
-        // $this->line("\e[33m------------------------------\e[0m");
-        // while (strlen($file) > 0) {
-        //     $try++;
-        //     $line = substr($file, 0, 120);
-        //     $lineEnd = strrpos($line, ',');
-        //     if (false === $lineEnd) {
-        //         $lineEnd = strlen($line);
-        //     } else {
-        //         $lineEnd++;
-        //         $line = substr($line, 0, $lineEnd);
-        //     }
-        //     $file = substr($file, $lineEnd);
-        //     $this->line($line);
-        //     if ($try > 30) die ("\e[31mPrint error\e[0m\n");
-        // }
-        // $this->line("\e[33m------------------------------\e[0m");
-
-
-        // $lines = explode("\n", $file);
-        // foreach ($lines as &$line) {
-        //     $this->line($line);
-        // }
-        // exit();
     }
 
+    /**
+     * Глубокий разбор и выдача в командную строку обьекта.
+     * @param object entity
+     */
     public function iterationView($entity)
     {
         $buf = [];
@@ -242,6 +211,10 @@ class Documentor
         }
     }
 
+    /**
+     * Отображение текста.
+     * @param object entity
+     */
     public function showLines(string $text)
     {
         static $maxTry = 30;
@@ -262,6 +235,10 @@ class Documentor
             if ($try > $maxTry) die ("\e[31mMax Try Print error\e[0m\n");
         }
     }
+
+    /**
+     * Переработка собранных неймспейсов.
+     */
     public function shrinkParsedStores()
     {
         $namespaces = [];
@@ -281,6 +258,10 @@ class Documentor
         }
         $this->parsed = $namespaces;
     }
+
+    /**
+     * Сохранение результатов в файл.
+     */
     public function outFile(string $file, $namespace = null)
     {
         if (is_null($namespace)) {
@@ -289,6 +270,10 @@ class Documentor
         file_put_contents($file, json_encode($namespace));
         $this->line("\e[1;32mСохранен файл \e[1;35m".$file."\e[0m");
     }
+
+    /**
+     * Сохранение результатов в директорию.
+     */
     public function outDir(string $dir)
     {
         foreach ($this->parsed as &$namespace) {
