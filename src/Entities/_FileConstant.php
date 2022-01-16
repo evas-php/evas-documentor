@@ -16,7 +16,13 @@ class _FileConstant extends AbstractFileEntity
 {
     use NamespaceTrait; // $namespace
 
+    /**
+     * @var string название
+     */
     public $name;
+    /**
+     * @var значение
+     */
     public $value;
 
     /**

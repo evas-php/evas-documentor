@@ -18,9 +18,21 @@ abstract class AbstractClassEntity extends AbstractFileEntity
 {
     use DocCommentTrait; // $docComment
     use NamespaceTrait; // $namespace
+
+    /**
+     * @var string Название класса
+     */
     public $name;
+
+    /**
+     * @var array of _Method список функций класса
+     */
     public $methods = [];
 
+    /**
+     * Установка функции .
+     * @param _Method функция
+     */
     public function method(_Method $method)
     {
         $this->methods[$method->name] = &$method;

@@ -14,7 +14,13 @@ use Evas\Documentor\Entities\_Property;
  */
 trait InnerTraitsAndPropertiesTrait
 {
+    /**
+     * @var array of _InnerTrait список трейтов
+     */
     public $traits = [];
+    /**
+     * @var array of _InnerTrait список свойств
+     */
     public $properties = [];
 
     /**

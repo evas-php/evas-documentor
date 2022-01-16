@@ -14,7 +14,19 @@ use Evas\Documentor\Entities\Traits\DocCommentTrait;
 trait ClassEntitiesTrait
 {
     use DocCommentTrait; // $docComment
+
+    /**
+     * @var string Название сущности
+     */
     public $name;
+
+    /**
+     * @var string область видимости
+     */
     public $visibility = 'public';
+
+    /**
+     * @var string статичность
+     */
     public $staticly = false;
 }

@@ -15,14 +15,17 @@ use Evas\Documentor\Entities\Traits\DocCommentTrait;
 class _InnerTrait extends AbstractFileEntity
 {
     use DocCommentTrait; // $docComment
-    public $traitName;
+    /**
+     * @var string название
+     */
+    public $name;
 
     /**
      * Конструктор.
      * @param string имя подключаемого трейта
      */
-    public function __construct(string $traitName)
+    public function __construct(string $name)
     {
-        $this->traitName = $traitName;
+        $this->name = $name;
     }
 }

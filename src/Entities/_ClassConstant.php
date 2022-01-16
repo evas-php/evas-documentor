@@ -13,7 +13,13 @@ use Evas\Documentor\Entities\Base\AbstractFileEntity;
  */
 class _ClassConstant extends AbstractFileEntity
 {
+    /**
+     * @var string название
+     */
     public $name;
+    /**
+     * @var значение
+     */
     public $value;
 
     /**
