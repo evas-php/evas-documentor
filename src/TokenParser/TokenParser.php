@@ -47,8 +47,9 @@ class TokenParser
      * Запуск парсинга.
      * @param _File
      */
-    public function run(_File $file)
+    public function run(_File $file):RouteStore
     {
+        Route::regenerateStorage();
         $tokens = $file->getTextTokens();
 
         foreach ($tokens as &$token) {
@@ -98,5 +99,6 @@ class TokenParser
             }
 
         }
+        return RouteMap::shrinkageMap();
     }
 }

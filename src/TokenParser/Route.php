@@ -38,6 +38,11 @@ class Route
         }
     }
 
+    public static function regenerateStorage()
+    {
+        static::$store = new RouteStore;
+    }
+
     /**
      * Завершение процесса, если соответсует символ.
      * @param string символ

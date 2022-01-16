@@ -5,6 +5,7 @@
 namespace Evas\Documentor\TokenParser;
 
 use Evas\Documentor\TokenParser\Route;
+use Evas\Documentor\TokenParser\RouteStore;
 
 /**
  * Маппинг процессов парсинга PHP токенов файла.
@@ -101,7 +102,13 @@ class RouteMap
         static::$ended[] = $route;
     }
 
-
+    public static function shrinkageMap():RouteStore
+    {
+        $store = clone static::$ended[0]::$store;
+        static::$current = [];
+        static::$ended = [];
+        return $store;
+    }
 
     /**
      * Поиск процесса по имени токена.

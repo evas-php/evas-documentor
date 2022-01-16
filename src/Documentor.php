@@ -5,6 +5,7 @@
 namespace Evas\Documentor;
 
 use Evas\Documentor\Entities\_File;
+use Evas\Documentor\Entities\Base\EntityNames;
 use Evas\Documentor\DocumentorException;
 use Evas\Documentor\TokenParser\TokenParser;
 
@@ -33,6 +34,8 @@ class Documentor
     public $lang;
     public $tokenParser;
 
+    public $parsed = [];
+
     public $dirCount = 0;
     public $fileCount = 0;
     public $level = 0;
@@ -60,9 +63,16 @@ class Documentor
         else {
             throw new DocumentorException('Указанное для чтения значение не является файлом или директорией');
         }
+        $this->shrinkParsedStores();
         $this->line('----------');
         $this->line("Просканировано директорий: \e[1;35m$this->dirCount\e[0m");
         $this->line("Просканировано файлов: \e[1;32m$this->fileCount\e[0m");
+
+        if (is_file($out)) $this->outFile($out);
+        else if (is_dir($out)) $this->outDir($out);
+        else {
+            throw new DocumentorException('Указанное для записи значение не является файлом или директорией');
+        }
     }
 
     /**
@@ -143,8 +153,8 @@ class Documentor
         // $this->line(token_name(382));
         // return;
         $this->level++;
-        $this->tokenParser->run($file);
         // echo "----------\n$file\n----------\n";
+        $this->parsed[] = $this->tokenParser->run($file);
         $try = 0;
         $this->line("\e[33m------------------------------\e[0m");
         $this->iterationView($file);
@@ -250,6 +260,39 @@ class Documentor
             $text = substr($text, $lineEnd);
             $this->line($line);
             if ($try > $maxTry) die ("\e[31mMax Try Print error\e[0m\n");
+        }
+    }
+    public function shrinkParsedStores()
+    {
+        $namespaces = [];
+        foreach ($this->parsed as &$store) {
+            if (!isset($namespaces[$store->namespace->name])) {
+                $namespaces[$store->namespace->name] = $store->namespace;
+            }
+            if (is_a($store->classEntity, EntityNames::_CLASS)) {
+                $namespaces[$store->namespace->name]->classes[$store->classEntity->name] = $store->classEntity;
+            } else
+            if (is_a($store->classEntity, EntityNames::_INTERFACE)) {
+                $namespaces[$store->namespace->name]->interfaces[$store->classEntity->name] = $store->classEntity;
+            } else
+            if (is_a($store->classEntity, EntityNames::_TRAIT)) {
+                $namespaces[$store->namespace->name]->traits[$store->classEntity->name] = $store->classEntity;
+            }            
+        }
+        $this->parsed = $namespaces;
+    }
+    public function outFile(string $file, $namespace = null)
+    {
+        if (is_null($namespace)) {
+            $namespace = &$this->parsed;
+        }
+        file_put_contents($file, json_encode($namespace));
+        $this->line("\e[1;32mСохранен файл \e[1;35m".$file."\e[0m");
+    }
+    public function outDir(string $dir)
+    {
+        foreach ($this->parsed as &$namespace) {
+            $this->outFile($dir.'\\'.str_replace('\\','',$namespace->name).'.json',$namespace);
         }
     }
 }
