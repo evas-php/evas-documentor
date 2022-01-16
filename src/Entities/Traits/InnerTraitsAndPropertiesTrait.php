@@ -38,6 +38,6 @@ trait InnerTraitsAndPropertiesTrait
      */
     public function trait(_InnerTrait $trait)
     {
-        $this->traits[$trait->traitName] = &$trait;
+        $this->traits[$trait->name] = &$trait;
     }
 }
