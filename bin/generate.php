@@ -87,8 +87,13 @@ if (!in_array($start, ['y', 'yes'])) {
 echo "\e[1mStart\e[0m\n";
 echo "----------\n";
 
+
 // подключаем вспомогательные функции модуля
 require_once SRC_DIR . '/functions.php';
+
+// режим дебага разработчика
+define('EVAS_ENV_PATH', dirname(BIN_DIR) . '/.env');
+define('DEV_DEBUG', env('DEV_DEBUG', false));
 
 $documentor = new Documentor($in, $out, $lang);
 
