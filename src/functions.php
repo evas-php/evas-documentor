@@ -11,6 +11,7 @@
  */
 function debug($message) {
     if (!defined('DEV_DEBUG') || boolval(DEV_DEBUG) === false) return;
+    if (!defined('VERBOSE') || boolval(VERBOSE) === false) return;
     if (is_array($message) || is_object($message)) $message = json_encode($message, JSON_UNESCAPED_UNICODE);
     else if ($message instanceof \Closure) $message = '\\Closure';
     echo $message;
