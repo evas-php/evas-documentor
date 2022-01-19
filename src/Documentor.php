@@ -17,7 +17,7 @@ class Documentor
     /**
      * @static array поддерживаемые языки
      */
-    const SUPPORT_LANGS = ['php', 'py', 'c', 'cpp'];
+    const SUPPORT_LANGS = ['php']; //, 'py', 'c', 'cpp'];
 
     /**
      * @static array расширения файлов языка
