@@ -58,19 +58,14 @@ class TokenParser
                 Route::$store->classBraceCount, Route::$store->methodBraceCount
             ));
 
-            if (is_string($token)) {
-                $tokenValue = $token;
-            } else
-                $tokenValue = $token[1];
+            $tokenValue = is_string($token) ? $token : $token[1];
             $routes = RouteMap::getCurrent();
             $processed = false;
             if (count($routes) > 0) {
                 foreach ($routes as &$route) {
                     $processed = $route->check($token);
-                    if (!$processed) {
-                        $route->mergeValue($tokenValue);
-                        continue;
-                    } else break;
+                    if ($processed) break;
+                    $route->mergeValue($tokenValue);
                 }
             }
             if ('{' === $token ) {
