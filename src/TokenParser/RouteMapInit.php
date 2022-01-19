@@ -194,6 +194,7 @@ class RouteMapInit
                     return 'define' === $this->tokenValue ? true : false;
                 })
                 ->endCallback(function () {
+                    if (empty(static::$store->namespace)) return;
                     $constant = $this->makeEntity(EntityNames::_FILE_CONSTANT);
                     $constant->namespace(static::$store->namespace);
                     static::$store->file->constant($constant);
