@@ -1,17 +1,15 @@
 <?php
 /**
+ * Абстрактный класс сущности файла.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 1 Jul 2020
  */
 namespace Evas\Documentor\Entities\Base;
 
 use Evas\Documentor\Entities\Base\AbstractEntity;
 use Evas\Documentor\Entities\_File;
 
-/**
- * Абстрактный класс сущности.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 1 Jul 2020
- */
 abstract class AbstractFileEntity extends AbstractEntity
 {
     /**

@@ -1,16 +1,14 @@
 <?php
 /**
+ * Сущность возвращаемого типа функции.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 30 Jun 2020
  */
 namespace Evas\Documentor\Entities;
 
 use Evas\Documentor\Entities\Base\AbstractEntity;
 
-/**
- * Сущность возвращаемого типа функции.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 30 Jun 2020
- */
 class _FunctionReturnType extends AbstractEntity
 {
     /**

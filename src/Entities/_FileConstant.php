@@ -1,17 +1,15 @@
 <?php
 /**
+ * Сущность константы файла.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 30 Jun 2020
  */
 namespace Evas\Documentor\Entities;
 
 use Evas\Documentor\Entities\Base\AbstractFileEntity;
 use Evas\Documentor\Entities\Traits\NamespaceTrait;
 
-/**
- * Сущность константы файла.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 30 Jun 2020
- */
 class _FileConstant extends AbstractFileEntity
 {
     use NamespaceTrait; // $namespace

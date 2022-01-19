@@ -1,6 +1,9 @@
 <?php
 /**
+ * Трейт поддержки сущностей неймспейса.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 1 Jul 2020
  */
 namespace Evas\Documentor\Entities\Traits;
 
@@ -10,11 +13,6 @@ use Evas\Documentor\Entities\_Trait;
 use Evas\Documentor\Entities\_FileFunction;
 use Evas\Documentor\Entities\_FileConstant;
 
-/**
- * Трейт поддержки сущностей неймспейса.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 1 Jul 2020
- */
 trait NamespaceEntitiesTrait
 {
     /**

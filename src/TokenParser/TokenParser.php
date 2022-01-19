@@ -1,6 +1,10 @@
 <?php
 /**
+ * Парсер PHP токенов файла.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @author Evgeniy Erementchouk <erement@evas-php.com>
+ * @since 21 Jun 2020
  */
 namespace Evas\Documentor\TokenParser;
 
@@ -11,11 +15,6 @@ use Evas\Documentor\TokenParser\Route;
 use Evas\Documentor\TokenParser\RouteMap;
 use Evas\Documentor\TokenParser\RouteMapInit;
 
-/**
- * Парсер PHP токенов файла.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 21 Jun 2020
- */
 class TokenParser
 {
     /**

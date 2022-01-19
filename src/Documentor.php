@@ -1,6 +1,9 @@
 <?php
 /**
+ * Documentor endpoint.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 20 Jun 2020
  */
 namespace Evas\Documentor;
 
@@ -9,11 +12,6 @@ use Evas\Documentor\Entities\Base\EntityNames;
 use Evas\Documentor\DocumentorException;
 use Evas\Documentor\TokenParser\TokenParser;
 
-/**
- * Documentor endpoint.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 20 Jun 2020
- */
 class Documentor
 {
     /**

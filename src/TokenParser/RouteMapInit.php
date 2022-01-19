@@ -1,6 +1,10 @@
 <?php
 /**
+ * Установщик маппинга процессов парсинга.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @author Evgeniy Erementchouk <erement@evas-php.com>
+ * @since 21 Jun 2020
  */
 namespace Evas\Documentor\TokenParser;
 
@@ -8,11 +12,6 @@ use Evas\Documentor\Entities\Base\EntityNames;
 use Evas\Documentor\TokenParser\Route;
 use Evas\Documentor\TokenParser\RouteMap;
 
-/**
- * Установщик маппинга процессов парсинга.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 21 Jun 2020
- */
 class RouteMapInit
 {
     public static function run()

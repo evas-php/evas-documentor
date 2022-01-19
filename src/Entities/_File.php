@@ -1,6 +1,10 @@
 <?php
 /**
+ * Сущность файла.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @author Evgeniy Erementchouk <erement@evas-php.com>
+ * @since 30 Jun 2020
  */
 namespace Evas\Documentor\Entities;
 
@@ -10,11 +14,6 @@ use Evas\Documentor\Entities\_UseAlias;
 use Evas\Documentor\Entities\Traits\DocCommentTrait;
 use Evas\Documentor\Entities\Traits\NamespaceEntitiesTrait;
 
-/**
- * Сущность файла.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 30 Jun 2020
- */
 class _File
 {
     use DocCommentTrait; // $docComment

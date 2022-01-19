@@ -1,16 +1,14 @@
 <?php
 /**
+ * Трейт поддержки неймспейса.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 1 Jul 2020
  */
 namespace Evas\Documentor\Entities\Traits;
 
 use Evas\Documentor\Entities\_Namespace;
 
-/**
- * Трейт поддержки неймспейса.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 1 Jul 2020
- */
 trait NamespaceTrait
 {
     /**

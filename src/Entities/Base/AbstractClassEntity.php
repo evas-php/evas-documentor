@@ -1,6 +1,9 @@
 <?php
 /**
+ * Абстрактный класс классовой сущности (класса/интерфейса/трейта).
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 1 Jul 2020
  */
 namespace Evas\Documentor\Entities\Base;
 
@@ -9,11 +12,6 @@ use Evas\Documentor\Entities\Traits\DocCommentTrait;
 use Evas\Documentor\Entities\Traits\NamespaceTrait;
 use Evas\Documentor\Entities\_Method;
 
-/**
- * Абстрактный класс классовой сущности (класса/интерфейса/трейта).
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 1 Jul 2020
- */
 abstract class AbstractClassEntity extends AbstractFileEntity
 {
     use DocCommentTrait; // $docComment

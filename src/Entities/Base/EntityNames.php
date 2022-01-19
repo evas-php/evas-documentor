@@ -1,6 +1,9 @@
 <?php
 /**
+ * Имена сущностей.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 1 Jul 2020
  */
 namespace Evas\Documentor\Entities\Base;
 
@@ -22,11 +25,6 @@ use Evas\Documentor\Entities\_UseAlias;
 use Evas\Documentor\Entities\_Trait;
 // use Evas\Documentor\Entities\Base\AbstractClassEntity;
 
-/**
- * Имена сущностей.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 1 Jul 2020
- */
 class EntityNames
 {
     const _CLASS = _Class::class;

@@ -1,16 +1,14 @@
 <?php
 /**
+ * Сущность константы класса.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 30 Jun 2020
  */
 namespace Evas\Documentor\Entities;
 
 use Evas\Documentor\Entities\Base\AbstractFileEntity;
 
-/**
- * Сущность константы класса.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 30 Jun 2020
- */
 class _ClassConstant extends AbstractFileEntity
 {
     /**

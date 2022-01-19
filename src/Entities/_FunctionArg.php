@@ -1,16 +1,14 @@
 <?php
 /**
+ * Сущность аргумента функции.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 30 Jun 2020
  */
 namespace Evas\Documentor\Entities;
 
 use Evas\Documentor\Entities\_FunctionReturnType;
 
-/**
- * Сущность аргумента функции.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 30 Jun 2020
- */
 class _FunctionArg extends _FunctionReturnType
 {
     /**

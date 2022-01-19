@@ -1,17 +1,15 @@
 <?php
 /**
+ * Трейт поддержки трейтов и свойств для классов и трейтов.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 1 Jul 2020
  */
 namespace Evas\Documentor\Entities\Traits;
 
 use Evas\Documentor\Entities\_InnerTrait;
 use Evas\Documentor\Entities\_Property;
 
-/**
- * Трейт поддержки трейтов и свойств для классов и трейтов.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 1 Jul 2020
- */
 trait InnerTraitsAndPropertiesTrait
 {
     /**

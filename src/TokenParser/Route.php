@@ -1,6 +1,10 @@
 <?php
 /**
+ * Процесс парсинга PHP токенов файла.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @author Evgeniy Erementchouk <erement@evas-php.com>
+ * @since 21 Jun 2020
  */
 namespace Evas\Documentor\TokenParser;
 
@@ -10,11 +14,6 @@ use Evas\Documentor\TokenParser\Traits\RouteCheckTrait;
 use Evas\Documentor\TokenParser\Traits\RoutePropertiesTrait;
 use Evas\Documentor\TokenParser\RouteStore;
 
-/**
- * Процесс парсинга PHP токенов файла.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 21 Jun 2020
- */
 class Route
 {
     /**

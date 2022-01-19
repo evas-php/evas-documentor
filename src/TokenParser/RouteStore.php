@@ -1,13 +1,13 @@
 <?php
 /**
- * @package evas-php\evas-documentor
- */
-namespace Evas\Documentor\TokenParser;
-/**
  * Хранилище парсинга PHP токенов файла.
+ * @package evas-php\evas-documentor
  * @author Egor Vasyakin <egor@evas-php.com>
+ * @author Evgeniy Erementchouk <erement@evas-php.com>
  * @since 2 Jul 2020
  */
+namespace Evas\Documentor\TokenParser;
+
 class RouteStore
 {
     /**

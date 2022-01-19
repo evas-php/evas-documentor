@@ -1,17 +1,16 @@
 <?php
 /**
+ * Трейт свойств процесса парсинга PHP токенов.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @author Evgeniy Erementchouk <erement@evas-php.com>
+ * @since 21 Jun 2020
  */
 namespace Evas\Documentor\TokenParser\Traits;
 
 use Evas\Documentor\Entities\_File;
 use Evas\Documentor\TokenParser\Route;
 
-/**
- * Трейт свойств процесса парсинга PHP токенов.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 21 Jun 2020
- */
 trait RoutePropertiesTrait
 {
     /** @var string имя процесса */

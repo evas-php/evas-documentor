@@ -1,6 +1,9 @@
 <?php
 /**
+ * Сущность класса.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 30 Jun 2020
  */
 namespace Evas\Documentor\Entities;
 
@@ -10,11 +13,6 @@ use Evas\Documentor\Entities\Traits\PrefixTrait;
 use Evas\Documentor\Entities\_ClassConstant;
 use Evas\Documentor\Entities\_UseAlias;
 
-/**
- * Сущность класса.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 30 Jun 2020
- */
 class _Class extends AbstractClassEntity
 {
     use PrefixTrait; // $prefix

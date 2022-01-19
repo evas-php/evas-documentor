@@ -1,6 +1,9 @@
 <?php
 /**
+ * Абстрактный класс функции.
  * @package evas-php\evas-documentor
+ * @author Egor Vasyakin <egor@evas-php.com>
+ * @since 1 Jul 2020
  */
 namespace Evas\Documentor\Entities\Base;
 
@@ -9,11 +12,6 @@ use Evas\Documentor\Entities\Traits\DocCommentTrait;
 use Evas\Documentor\Entities\_FunctionArg;
 use Evas\Documentor\Entities\_FunctionReturnType;
 
-/**
- * Абстрактный класс функции.
- * @author Egor Vasyakin <egor@evas-php.com>
- * @since 1 Jul 2020
- */
 abstract class AbstractFunction extends AbstractFileEntity
 {
     use DocCommentTrait; // $docComment

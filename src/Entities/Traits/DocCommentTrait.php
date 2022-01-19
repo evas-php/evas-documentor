@@ -1,14 +1,12 @@
 <?php
 /**
- * @package evas-php\evas-documentor
- */
-namespace Evas\Documentor\Entities\Traits;
-
-/**
  * Трейт поддержки комментария docComment.
+ * @package evas-php\evas-documentor
  * @author Egor Vasyakin <egor@evas-php.com>
  * @since 11 Jul 2020
  */
+namespace Evas\Documentor\Entities\Traits;
+
 trait DocCommentTrait
 {
     /**
