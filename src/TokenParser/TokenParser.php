@@ -67,7 +67,7 @@ class TokenParser
                 $tokenValue = $token[1];
             $routes = RouteMap::getCurrent();
             $processed = false;
-            if (count($routes)>0) {
+            if (count($routes) > 0) {
                 foreach ($routes as &$route) {
                     $processed = $route->check($token);
                     if (!$processed) {
