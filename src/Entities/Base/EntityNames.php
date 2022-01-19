@@ -9,7 +9,6 @@ namespace Evas\Documentor\Entities\Base;
 
 use Evas\Documentor\Entities\_Class;
 use Evas\Documentor\Entities\_ClassConstant;
-use Evas\Documentor\Entities\_Define;
 use Evas\Documentor\Entities\_File;
 use Evas\Documentor\Entities\_FileConstant;
 use Evas\Documentor\Entities\_FileFunction;
@@ -29,7 +28,6 @@ class EntityNames
 {
     const _CLASS = _Class::class;
     const _CLASS_CONSTANT = _ClassConstant::class;
-    const _DEFINE = _Define::class;
     const _FILE = _File::class;
     const _FILE_CONSTANT = _FileConstant::class;
     const _FILE_FUNCTION = _FileFunction::class;
