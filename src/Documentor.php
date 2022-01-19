@@ -280,7 +280,7 @@ class Documentor
         if (is_null($namespace)) {
             $namespace = &$this->parsed;
         }
-        file_put_contents($file, json_encode($namespace,JSON_PRETTY_PRINT));
+        file_put_contents($file, json_encode($namespace,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         $this->line("\e[1;32mСохранен файл \e[1;35m".$file."\e[0m");
     }
 
