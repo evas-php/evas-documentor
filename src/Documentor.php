@@ -124,6 +124,7 @@ class Documentor
             $this->scanFile($file);
         }
         $this->level--;
+        $try--;
     }
 
 
