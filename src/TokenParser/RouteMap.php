@@ -106,12 +106,15 @@ class RouteMap
      * Очистка маппера и возврат результатов.
      * @return RouteStore
      */
-    public static function shrinkageMap():RouteStore
+    public static function shrinkageMap(): RouteStore
     {
-        $store = clone static::$ended[0]::$store;
-        static::$current = [];
-        static::$ended = [];
-        return $store;
+        if (count(static::$ended)>0) {
+            $store = clone static::$ended[0]::$store;
+            static::$current = [];
+            static::$ended = [];
+            return $store;
+        }
+        return new RouteStore;
     }
 
     /**

@@ -105,10 +105,10 @@ class RouteMapInit
                 ->endSymbol('(')
                 ->endCallback(function () {
                     if (empty($this->getValue())) return;
+                    if (empty(static::$store->namespace)) return;
                     $className = empty(static::$store->class) 
                         ? EntityNames::_FILE_FUNCTION : EntityNames::_METHOD;
                     $method = $this->makeEntity($className);
-
                     if (empty(static::$store->class)) {
                         $this->file->addFunction($method);
                         static::$store->namespace->addFunction($method);
