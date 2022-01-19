@@ -52,14 +52,11 @@ class TokenParser
         $tokens = $file->getTextTokens();
 
         foreach ($tokens as &$token) {
-            if (VERBOSE) {
-                if (is_array($token)) {
-                    echo token_name($token[0]).','.json_encode($token[1]).'  '.count(RouteMap::$current).'  '.count(RouteMap::$ended);;
-                } else{
-                    echo $token .'   '.count(RouteMap::$current).'  '.count(RouteMap::$ended);
-                }
-                echo ' '.Route::$store->classBraceCount.' '.Route::$store->methodBraceCount."\n";
-            }
+            debug(sprintf("%s %d %d %d %d\n", 
+                    is_array($token) ? (token_name($token[0]).','.json_encode($token[1])) : $token,
+                    count(RouteMap::$current), count(RouteMap::$ended),
+                    Route::$store->classBraceCount, Route::$store->methodBraceCount
+            ));
 
             if (is_string($token)) {
                 $tokenValue = $token;
