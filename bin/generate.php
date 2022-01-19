@@ -87,5 +87,8 @@ if (!in_array($start, ['y', 'yes'])) {
 echo "\e[1mStart\e[0m\n";
 echo "----------\n";
 
+// подключаем вспомогательные функции модуля
+require_once SRC_DIR . '/functions.php';
+
 $documentor = new Documentor($in, $out, $lang);
 

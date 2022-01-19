@@ -12,6 +12,9 @@ use Evas\Documentor\Entities\Base\EntityNames;
 use Evas\Documentor\DocumentorException;
 use Evas\Documentor\TokenParser\TokenParser;
 
+// подключаем вспомогательные функции модуля
+require_once __DIR__ . '/functions.php';
+
 class Documentor
 {
     /**
