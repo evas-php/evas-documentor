@@ -254,6 +254,11 @@ class Documentor
             if (!isset($namespaces[$store->namespace->name])) {
                 $namespaces[$store->namespace->name] = $store->namespace;
             }
+            if (!isset($store->classEntity)) {
+                $namespaces[$store->namespace->name]->functions = array_merge($namespaces[$store->namespace->name]->functions,$store->namespace->functions);
+                $namespaces[$store->namespace->name]->constants = array_merge($namespaces[$store->namespace->name]->constants,$store->namespace->constants);
+                continue;
+            }
             if (is_a($store->classEntity, EntityNames::_CLASS)) {
                 $namespaces[$store->namespace->name]->classes[$store->classEntity->name] = $store->classEntity;
             } else
