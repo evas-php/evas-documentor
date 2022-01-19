@@ -231,7 +231,10 @@ class Documentor
             }
             $text = substr($text, $lineEnd);
             $this->line($line);
-            if ($try > $maxTry) die ("\e[31mMax Try Print error\e[0m\n");
+            if ($try > $maxTry) {
+                $this->line("\e[31mMax Try Print error\e[0m");
+                return;
+            }
         }
     }
 
