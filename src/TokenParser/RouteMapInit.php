@@ -104,11 +104,11 @@ class RouteMapInit
                 ->endSymbol('(')
                 ->endCallback(function () {
                     if (empty($this->getValue())) return;
-                    if (empty(static::$store->namespace)) return;
                     $className = empty(static::$store->class) 
                         ? EntityNames::_FILE_FUNCTION : EntityNames::_METHOD;
                     $method = $this->makeEntity($className);
                     if (empty(static::$store->class)) {
+                        if (empty(static::$store->namespace)) return;
                         $this->file->addFunction($method);
                         static::$store->namespace->addFunction($method);
                     } else {
@@ -202,6 +202,9 @@ class RouteMapInit
                 ->tokenName('T_DOC_COMMENT')
                 ->endCallback(function () {
                     static::$store->docComment = $this->getValue();
+                    if (is_null(static::$store->file->docComment['text'])) {
+                        static::$store->setDocComment(static::$store->file);
+                    }
                     // if (!isset(static::$store->namespace) && !isset(static::$store->inEntity)) {
                         // static::$store->setDocComment(static::$store->docComment);
                     // }

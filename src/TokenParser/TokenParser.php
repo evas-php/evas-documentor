@@ -90,6 +90,10 @@ class TokenParser
             }
 
         }
-        return RouteMap::shrinkageMap();
+        $store = RouteMap::shrinkageMap();
+        if (is_null($store->file)) {
+            $store->file = $file;
+        }
+        return $store;
     }
 }
