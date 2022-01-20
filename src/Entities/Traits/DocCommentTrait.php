@@ -14,14 +14,19 @@ trait DocCommentTrait
      */
     public $docComment = [
         'text' => null,
-        'descripton' => null,
+        'description' => null,
         'package' => null,
-        'authors' => null,
+        'author' => [],
         'since' => null,
-        'vars' => null,
-        'params' => null,
+        'var' => [],
+        'property' => [],
+        'todo' => [],
+        'see' => [],
+        'link' => [],
+        'param' => [],
+        'static' => [],
         'return' => null,
-        'throws' => null,
+        'throws' => [],
     ];
 
     /**
@@ -41,7 +46,8 @@ trait DocCommentTrait
     private function parse()
     {
         $tokenLines = explode("\n", ltrim(rtrim($this->docComment['text'],"*/"),"/**"));
-        $writer = &$this->docComment['descripton'];
+        $temp = '';
+        $last = 'description';
 
         foreach ($tokenLines as &$tokenLine) {
             $tokenLine = trim($tokenLine);
@@ -49,70 +55,50 @@ trait DocCommentTrait
             $tokens = explode(" ",$tokenLine);
 
             foreach ($tokens as &$token) {
-                // if ($token == '*') {
-                //     $writer = &$this->docComment['descripton'];
-                //     continue;
-                // }
-                if ($token == '@package') {
-                    $writer = &$this->docComment['package'];
+                if (!isset($token)) {
                     continue;
                 }
-                if ($token == '@since') {
-                    $writer = &$this->docComment['since'];
+                if (strlen($token)>0 && $token[0] == '@') {
+                    if (is_array($this->docComment[$last])) {
+                        $this->docComment[$last][] = trim($temp,"* ");
+                    } else {
+                        $this->docComment[$last] = trim($temp,"* ");
+                    }
+                    $temp = '';
+                    $last = ltrim($token,'@');
                     continue;
                 }
-                if ($token == '@return') {
-                    $writer = &$this->docComment['return'];
-                    continue;
-                }
-                if ($token == '@author') {
-                    $writer = &$this->docComment['authors'];
-                    $writer .= '*';
-                    continue;
-                }
-                if ($token == '@var') {
-                    $writer = &$this->docComment['vars'];
-                    $writer .= '*';
-                    continue;
-                }
-                if ($token == '@param') {
-                    $writer = &$this->docComment['params'];
-                    $writer .= '*';
-                    continue;
-                }
-                if ($token == '@throws') {
-                    $writer = &$this->docComment['throws'];
-                    $writer .= '*';
-                    continue;
-                }
-                $writer .= $token.' ';
+                $temp .= $token.' ';
             }
+        }
+        if (is_array($this->docComment[$last])) {
+            $this->docComment[$last][] = trim($temp,"* ");
+        } else {
+            $this->docComment[$last] = trim($temp,"* ");
         }
         foreach ($this->docComment as $key => $value) {
             if (is_null($this->docComment[$key])) {
                 unset($this->docComment[$key]);
                 continue;
-            } else
-            $this->docComment[$key] = trim($this->docComment[$key], '* ');
-            if ($key == 'authors') {
-                $this->docComment[$key] = explode('*', $this->docComment[$key]);
-                continue;
+            } 
+            if (is_array($this->docComment[$key])) {
+                if (count($this->docComment[$key]) == 0) {
+                    unset($this->docComment[$key]);
+                    continue;
+                }
             }
-            if ($key == 'vars' || $key == 'params' || $key == 'throws' || $key == 'return') {
-                $params = explode('*', $this->docComment[$key]);
-                $this->docComment[$key] = [];
 
-                foreach ($params as &$param) {
-                    if (strlen($param) <= 1) continue;
-                    $temp = explode(' ', trim($param));
-                    $param = [
-                        'type' => $temp[0],
+            if ($key == 'var' || $key == 'param' || $key == 'throw' || $key == 'static' ) {
+                foreach ($this->docComment[$key] as &$elem) {
+                    $params = explode(' ', $elem);
+                    if (count($params) <= 1) continue;
+                    $elem = [
+                        'type' => $params[0],
                     ];
-                    if (count($temp)>1) {
-                        unset($temp[0]);
-                        $param['info'] = implode(' ', $temp);
+                    if (count($params)>1) {
+                        unset($params[0]);
+                        $elem['info'] = implode(' ', $params);
                     }
-                    $this->docComment[$key][] = $param;
                 }
             }
         }
