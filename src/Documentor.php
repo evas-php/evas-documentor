@@ -252,7 +252,10 @@ class Documentor
                 if (!isset($namespaces['UNRECOGNIZED'])) {
                     $namespaces['UNRECOGNIZED'] = [];
                 }
-                $namespaces['UNRECOGNIZED'][] = $store;
+                if (!isset($namespaces['UNRECOGNIZED'][str_replace(RUN_DIR, '.', dirname($store->file->path))])) {
+                    $namespaces['UNRECOGNIZED'][str_replace(RUN_DIR, '.', dirname($store->file->path))] = [];
+                }
+                $namespaces['UNRECOGNIZED'][str_replace(RUN_DIR, '.', dirname($store->file->path))][] = $store;
                 continue;
             }
             if (!isset($namespaces[$store->namespace->name])) {
