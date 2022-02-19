@@ -3,12 +3,14 @@
  * Documentor endpoint.
  * @package evas-php\evas-documentor
  * @author Egor Vasyakin <egor@evas-php.com>
+ * @author Evgeniy Erementchouk <erement@evas-php.com>
  * @since 20 Jun 2020
  */
 namespace Evas\Documentor;
 
 use Evas\Documentor\Entities\_File;
 use Evas\Documentor\Entities\Base\EntityNames;
+use Evas\Documentor\Markdown;
 use Evas\Documentor\DocumentorException;
 use Evas\Documentor\TokenParser\TokenParser;
 
@@ -17,6 +19,7 @@ require_once __DIR__ . '/functions.php';
 
 class Documentor
 {
+    use Markdown;
     /**
      * @static array поддерживаемые языки
      */
@@ -251,6 +254,7 @@ class Documentor
             if (!isset($store->namespace)) {
                 if (!isset($namespaces['UNRECOGNIZED'])) {
                     $namespaces['UNRECOGNIZED'] = [];
+                    $namespaces['UNRECOGNIZED']['name'] = 'parentless';
                 }
                 if (!isset($namespaces['UNRECOGNIZED'][str_replace(RUN_DIR, '.', dirname($store->file->path))])) {
                     $namespaces['UNRECOGNIZED'][str_replace(RUN_DIR, '.', dirname($store->file->path))] = [];
@@ -287,7 +291,8 @@ class Documentor
         if (is_null($namespace)) {
             $namespace = &$this->parsed;
         }
-        file_put_contents($file, json_encode($namespace,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        // file_put_contents($file, json_encode($namespace,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        file_put_contents($file, $this->PHPToMarkdown($namespace));
         $this->line("\e[1;32mСохранен файл \e[1;35m".$file."\e[0m");
     }
 
@@ -297,7 +302,121 @@ class Documentor
     public function outDir(string $dir)
     {
         foreach ($this->parsed as $name => $namespace) {
-            $this->outFile($dir.'\\'.str_replace('\\','',$name).'.json',$namespace);
+            $this->outFile($dir.'\\'.str_replace('\\','',strtolower($name)).'.md',$namespace);
         }
     }
+
+    /**
+     * Конвертация PHP обьектов в Markdown.
+     */
+    public function PHPToMarkdown($namespace)
+    {   
+        $out = '';
+        foreach ($namespace as $rootKey => &$entity) {
+            if ($rootKey == 'name') {
+                $out .= "# $entity\n";
+            }
+            if ($rootKey == 'classes') {
+                foreach ($entity as $className => &$class) {
+                    $out .= "## $className\n";
+                    $out .= $this->class($class);
+                }
+            }
+            if ($rootKey == 'interfaces') {
+                foreach ($entity as $interfaceName => &$interface) {
+                    $out .= "## $interfaceName\n";
+                    $out .= $this->interface($interface);
+                }
+                
+            }
+            if ($rootKey == 'traits') {
+                foreach ($entity as $traitName => &$trait) {
+                    $out .= "## $traitName\n";
+                    $out .= $this->trait($trait);
+                }
+                
+            }
+            if ($rootKey == 'functions') {
+                foreach ($entity as $fileFunctionName => &$fileFunction) {
+                    $out .= "## $fileFunctionName\n";
+                    $out .= $this->fileFunction($fileFunction);
+                }
+                
+            }
+            if ($rootKey == 'constants') {
+                foreach ($entity as $fileConstantName => &$fileConstant) {
+                    $out .= "## $fileConstantName\n";
+                    $out .= $this->fileConstant($interface);
+                }
+                
+            }
+
+
+        }
+
+    //     $buf = [];
+    //         if (is_numeric($name)) {
+    //             $key = "$name";
+    //         } else {
+    //             $key = "$name";
+    //         }
+    //         if (is_array($value) || is_object($value)) {
+    //             if (!empty($buf)) {
+    //                 $buf = implode("\n", $buf);
+    //                 $out .= $buf."\n";
+    //                 $buf = [];
+    //             }
+    //             $brace = is_object($value) ? true : false;
+    //             $openBrace = $brace ? '{' : '[';
+    //             $closeBrace = $brace ? '}' : ']';
+    //             if (empty($value)) {
+    //                 $openBrace = null;
+    //                 $closeBrace = null;
+    //             } 
+    //             // if (!is_numeric($key) && !is_null($openBrace)) 
+    //                 // $out .= "$key: $openBrace \n";
+    //             if (!is_null($closeBrace)) {
+    //                 // echo $this->level . "\n";
+    //                 $this->level++;
+    //                 $out .= $this->PHPToMarkdown($value);
+    //                 $this->level--;
+    //                 $out .= " \n";
+    //             }
+    //         } else {
+    //             $val = $value;
+    //             if (is_string($val)) {
+    //                 $val = "$val";
+    //             } else {
+    //                 if (is_bool($val)) {
+    //                     $val = true === $value ? 'true': 'false';
+    //                     $val = "$val";
+    //                 } else if (is_null($val)) {
+    //                     continue;
+    //                 } else {
+    //                     $val = "$val";
+    //                 }
+    //             }
+    //             if ($key == 'name') {   
+    //                 $str = '#';
+    //                 // echo $this->level . "\n";
+    //                 for ($i=0; $i < intval($this->level/2); $i++) { 
+    //                     $str .= '#';
+    //                 }
+    //                 $buf[] = "$str $val";
+    //             } else
+    //             if ($key == 'line' || $key == 'text') {} else
+    //                 $buf[] = "- $key: `$val`";
+    //         }
+    //     }
+    //     if (!empty($buf)) {
+    //         $buf = implode("\n", $buf);
+    //         $out .= $buf."\n";
+    //         $buf = [];
+    //     }
+        return $out;
+
+        
+    }
+    
+
 }
